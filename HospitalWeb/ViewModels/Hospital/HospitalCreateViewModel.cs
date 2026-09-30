@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HospitalWeb.ViewModels
+namespace HospitalWeb.ViewModels.Hospital
 {
-    public class HospitalEditViewModel
+    public class HospitalCreateViewModel
     {
-        public int Id { get; set; }
-        [Required(ErrorMessage ="Името е задължителен")]
+        [Required(ErrorMessage = "Името е задължителен")]
         [StringLength(50, ErrorMessage = "Максимум 50 символа")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Адресът е задължителен")]

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace HospitalWeb.ViewModels
+namespace HospitalWeb.ViewModels.Hospital
 {
     public class HospitalDetailsViewModel
     {
@@ -10,7 +10,7 @@ namespace HospitalWeb.ViewModels
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
         public int BedsCount { get; set; }
-        [Display(Name="Създадена на")]
+        [Display(Name = "Създадена на")]
         public DateTime CreatedOn { get; set; }
         public bool IsDeleted { get; set; }
     }

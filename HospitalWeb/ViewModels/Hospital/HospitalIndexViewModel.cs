@@ -1,4 +1,4 @@
-﻿namespace HospitalWeb.ViewModels
+﻿namespace HospitalWeb.ViewModels.Hospital
 {
     public class HospitalIndexViewModel
     {

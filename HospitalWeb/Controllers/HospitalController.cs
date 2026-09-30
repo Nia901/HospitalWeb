@@ -1,7 +1,7 @@
 ﻿using Data_Hospital;
 using Data_Hospital.Entities;
 using HospitalWeb.Models;
-using HospitalWeb.ViewModels;
+using HospitalWeb.ViewModels.Hospital;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
