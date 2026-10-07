@@ -63,6 +63,21 @@ namespace Data_Hospital.Migrations
                     b.ToTable("Doctors");
                 });
 
+            modelBuilder.Entity("Data_Hospital.Entities.DoctorPatient", b =>
+                {
+                    b.Property<int>("DoctorId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("PatientId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DoctorId", "PatientId");
+
+                    b.HasIndex("PatientId");
+
+                    b.ToTable("DoctorPatients");
+                });
+
             modelBuilder.Entity("Data_Hospital.Entities.Hospital", b =>
                 {
                     b.Property<int>("Id")
@@ -143,6 +158,35 @@ namespace Data_Hospital.Migrations
                         .IsRequired();
 
                     b.Navigation("Hospital");
+                });
+
+            modelBuilder.Entity("Data_Hospital.Entities.DoctorPatient", b =>
+                {
+                    b.HasOne("Data_Hospital.Entities.Doctor", "Doctor")
+                        .WithMany("Patients")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Data_Hospital.Entities.Patient", "Patient")
+                        .WithMany("Doctors")
+                        .HasForeignKey("PatientId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Doctor");
+
+                    b.Navigation("Patient");
+                });
+
+            modelBuilder.Entity("Data_Hospital.Entities.Doctor", b =>
+                {
+                    b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("Data_Hospital.Entities.Patient", b =>
+                {
+                    b.Navigation("Doctors");
                 });
 #pragma warning restore 612, 618
         }

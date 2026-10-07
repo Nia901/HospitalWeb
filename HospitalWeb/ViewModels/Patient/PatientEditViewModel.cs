@@ -17,5 +17,7 @@ namespace HospitalWeb.ViewModels.Patient
         [Required(ErrorMessage = "Телефонният номер е задължителен.")]
         [Phone(ErrorMessage = "Моля, въведете валиден телефонен номер.")]
         public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "Моля, изберете доктор.")]
+        public List<int> DoctorIds { get; set; }
     }
 }

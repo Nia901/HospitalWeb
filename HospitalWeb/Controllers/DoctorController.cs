@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using HospitalWeb.ViewModels.Doctor;
+using System.Runtime.Intrinsics.Arm;
 
 namespace HospitalWeb.Controllers
 {
@@ -43,6 +44,8 @@ namespace HospitalWeb.Controllers
         {
             var doctor = await context.Doctors
                 .Include(d => d.Hospital)
+                .Include(d=>d.Patients)
+                .ThenInclude(dp => dp.Patient)
                 .FirstOrDefaultAsync(d => d.Id == id);
 
             if (doctor == null)
@@ -58,7 +61,9 @@ namespace HospitalWeb.Controllers
                 Specialty = doctor.Specialty,
                 Email = doctor.Email,
                 PhoneNumber = doctor.PhoneNumber,
-                HospitalName = doctor.Hospital.Name
+                HospitalName = doctor.Hospital.Name,
+
+                Patients = doctor.Patients.Select(dp => dp.Patient.FirstName + " " + dp.Patient.LastName).ToList()
             };
 
             return View(model);

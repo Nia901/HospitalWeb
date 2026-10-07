@@ -35,5 +35,6 @@ namespace Data_Hospital.Entities
         public int HospitalId { get; set; }
 
         public Hospital Hospital { get; set; }
+        public ICollection<DoctorPatient> Patients { get; set; }=new List<DoctorPatient>();
     }
 }

@@ -33,7 +33,7 @@ namespace HospitalWeb
 
             app.MapControllerRoute(
                 name: "default",
-                pattern: "{controller=Hospital}/{action=Create}/{id?}");
+                pattern: "{controller=Hospital}/{action=Index}/{id?}");
 
             app.Run();
         }
