@@ -1,5 +1,6 @@
 ﻿using Data_Hospital;
 using Data_Hospital.Entities;
+using Hospital_Manager.Core.Interfaces;
 using HospitalWeb.Models;
 using HospitalWeb.ViewModels.Hospital;
 using Microsoft.AspNetCore.Mvc;
@@ -9,15 +10,15 @@ namespace HospitalWeb.Controllers
 {
     public class HospitalController : Controller
     {
-        private readonly HospitalDbContext context;
-        public HospitalController(HospitalDbContext context)
+        private readonly IHospitalService hospitalService;
+        public HospitalController(IHospitalService hospitalService)
         {
-            this.context = context;
+            this.hospitalService = hospitalService;
         }
 
         public async Task<IActionResult> Index()
         {
-            var hospitals = await context.Hospitals.ToListAsync();
+            var hospitals = await hospitalService.GetAllHospitalsAsync();
 
             var model = new List<HospitalIndexViewModel>();
 
@@ -37,7 +38,7 @@ namespace HospitalWeb.Controllers
         }
         public async Task<IActionResult> Details(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hospitalService.GetHospitalByIdAsync(id);
 
             if(hospital == null)
             {
@@ -75,8 +76,7 @@ namespace HospitalWeb.Controllers
                     CreatedOn = DateTime.Now,
                     IsDeleted = false
                 };
-                context.Hospitals.Add(hospital);
-                await context.SaveChangesAsync();
+                await hospitalService.AddHospitalAsync(hospital);
                 return RedirectToAction(nameof(Index));
             }
             
@@ -84,7 +84,7 @@ namespace HospitalWeb.Controllers
         }
         public async Task<IActionResult> Edit(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hospitalService.GetHospitalByIdAsync(id);
 
             if (hospital == null)
             {
@@ -111,7 +111,7 @@ namespace HospitalWeb.Controllers
             }
             if (ModelState.IsValid)
             {
-                var hospital = await context.Hospitals.FindAsync(id);
+                var hospital = await hospitalService.GetHospitalByIdAsync(id);
 
                 if (hospital == null)
                 {
@@ -123,7 +123,7 @@ namespace HospitalWeb.Controllers
                 hospital.Email= model.Email;
                 hospital.PhoneNumber = model.PhoneNumber;
                 hospital.BedsCount = model.BedsCount;
-                await context.SaveChangesAsync();
+                await hospitalService.UpdateHospitalAsync(hospital);
                 return RedirectToAction(nameof(Index));
                 
             }
@@ -131,7 +131,7 @@ namespace HospitalWeb.Controllers
         }
         public async Task<IActionResult> Delete(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
+            var hospital = await hospitalService.GetHospitalByIdAsync(id);
             if (hospital == null)
             {
                 return NotFound();
@@ -147,12 +147,7 @@ namespace HospitalWeb.Controllers
         [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var hospital = await context.Hospitals.FindAsync(id);
-            if (hospital != null)
-            {
-                context.Hospitals.Remove(hospital);
-                await context.SaveChangesAsync();
-            }
+            await hospitalService.DeleteHospitalAsync(id);
             return RedirectToAction(nameof(Index));
         }
     } 
