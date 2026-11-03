@@ -1,4 +1,5 @@
-﻿using Data_Hospital.Entities;
+﻿using Data_Hospital.Configurations;
+using Data_Hospital.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -37,6 +38,11 @@ namespace Data_Hospital
                 .WithMany(p => p.Doctors)
                 .HasForeignKey(dp => dp.PatientId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.ApplyConfiguration(new HospitalConfiguration());
+            modelBuilder.ApplyConfiguration(new DoctorConfiguration());
+            modelBuilder.ApplyConfiguration(new PatientConfiguration());
+            modelBuilder.ApplyConfiguration(new DoctorPatientConfiguration());
         }
     }
 }
