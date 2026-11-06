@@ -16,9 +16,9 @@ namespace HospitalWeb.Controllers
             this.hospitalService = hospitalService;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string? search,int?minBeds,string?sortOrder)
         {
-            var hospitals = await hospitalService.GetAllHospitalsAsync();
+            var hospitals = await hospitalService.GetAllHospitalsAsync(search,minBeds,sortOrder);
 
             var model = new List<HospitalIndexViewModel>();
 
@@ -34,6 +34,9 @@ namespace HospitalWeb.Controllers
                     BedsCount = item.BedsCount
                 });
             }
+            ViewBag.Search = search;
+            ViewBag.MinBeds = minBeds;
+            ViewBag.SortOrder = sortOrder;
             return View(model);
         }
         public async Task<IActionResult> Details(int id)
