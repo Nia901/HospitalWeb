@@ -34,9 +34,9 @@ namespace Hospital_Manager.Core.Services
             {
                 case "name":query = query.OrderBy(h => h.Name);
                     break;
-                    case "name_desc":query = query.OrderByDescending(h => h.BedsCount);
+                    case "beds_desc":query = query.OrderByDescending(h => h.BedsCount);
                     break;
-                    case "name_asc":query = query.OrderBy(h => h.BedsCount);
+                    case "beds_asc":query = query.OrderBy(h => h.BedsCount);
                     break;
                 default:query = query.OrderBy(h => h.Name);
                     break;
