@@ -1,11 +1,12 @@
-﻿using Data_Hospital.Entities;
-using Data_Hospital;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using HospitalWeb.ViewModels.Doctor;
-using System.Runtime.Intrinsics.Arm;
+﻿using Data_Hospital;
+using Data_Hospital.Entities;
 using Hospital_Manager.Core.Interfaces;
+using HospitalWeb.ViewModels.Doctor;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using System.Numerics;
+using System.Runtime.Intrinsics.Arm;
 
 namespace HospitalWeb.Controllers
 {
@@ -17,6 +18,21 @@ namespace HospitalWeb.Controllers
         {
             this.doctorService = doctorService;
             this.hospitalService = hospitalService;
+        }
+        [HttpGet]
+        public async Task<IActionResult> GetFilterDoctors(string? search, string? specialty, string? sortOrder)
+        {
+            var doctors = await doctorService.GetAllDoctorsAsync(search, specialty, sortOrder);
+
+            var result = doctors.Select(d => new
+            {
+                Id = d.Id,
+                FirstName = d.FirstName,
+                LastName = d.LastName,
+                Specialty = d.Specialty,
+                HospitalName = d.Hospital.Name
+            }).ToList();
+            return Json(result);
         }
 
         public async Task<IActionResult> Index()

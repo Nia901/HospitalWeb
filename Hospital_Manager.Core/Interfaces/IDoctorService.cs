@@ -1,4 +1,5 @@
 ﻿using Data_Hospital.Entities;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +10,7 @@ namespace Hospital_Manager.Core.Interfaces
 {
     public interface IDoctorService
     {
-        Task<List<Doctor>> GetAllDoctorsAsync();
+        Task<List<Doctor>> GetAllDoctorsAsync(string? search=null,string?specialty=null,string? sortOrder=null);
         Task<Doctor?> GetDoctorDetailsAsync(int id);
         Task<Doctor?> GetDoctorByIdAsync(int id);
         Task AddDoctorAsync(Doctor doctor);
