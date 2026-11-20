@@ -262,9 +262,9 @@ namespace Data_Hospital.Migrations
             modelBuilder.Entity("Data_Hospital.Entities.Doctor", b =>
                 {
                     b.HasOne("Data_Hospital.Entities.Hospital", "Hospital")
-                        .WithMany()
+                        .WithMany("Doctors")
                         .HasForeignKey("HospitalId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Hospital");
@@ -292,6 +292,11 @@ namespace Data_Hospital.Migrations
             modelBuilder.Entity("Data_Hospital.Entities.Doctor", b =>
                 {
                     b.Navigation("Patients");
+                });
+
+            modelBuilder.Entity("Data_Hospital.Entities.Hospital", b =>
+                {
+                    b.Navigation("Doctors");
                 });
 
             modelBuilder.Entity("Data_Hospital.Entities.Patient", b =>

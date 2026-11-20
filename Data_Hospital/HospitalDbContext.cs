@@ -22,22 +22,27 @@ namespace Data_Hospital
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            base.OnModelCreating(modelBuilder);
+            //base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<DoctorPatient>()
-                .HasKey(dp => new { dp.DoctorId, dp.PatientId });
+            //modelBuilder.Entity<DoctorPatient>()
+            //    .HasKey(dp => new { dp.DoctorId, dp.PatientId });
 
-            modelBuilder.Entity<DoctorPatient>()
-                .HasOne(dp => dp.Doctor)
-                .WithMany(d => d.Patients)
-                .HasForeignKey(dp => dp.DoctorId)
-                .OnDelete(DeleteBehavior.Cascade);//za da se iztriqt zapisite v i dvete tablici
+            //modelBuilder.Entity<DoctorPatient>()
+            //    .HasOne(dp => dp.Doctor)
+            //    .WithMany(d => d.Patients)
+            //    .HasForeignKey(dp => dp.DoctorId)
+            //    .OnDelete(DeleteBehavior.Cascade);//za da se iztriqt zapisite v i dvete tablici
 
-            modelBuilder.Entity<DoctorPatient>()
-                .HasOne(dp => dp.Patient)
-                .WithMany(p => p.Doctors)
-                .HasForeignKey(dp => dp.PatientId)
-                .OnDelete(DeleteBehavior.Cascade);
+            //modelBuilder.Entity<DoctorPatient>()
+            //    .HasOne(dp => dp.Patient)
+            //    .WithMany(p => p.Doctors)
+            //    .HasForeignKey(dp => dp.PatientId)
+            //    .OnDelete(DeleteBehavior.Cascade);
+            //||predi Fluent api
+
+
+
+            base.OnModelCreating(modelBuilder);//sled fluent api
 
             modelBuilder.ApplyConfiguration(new HospitalConfiguration());
             modelBuilder.ApplyConfiguration(new DoctorConfiguration());

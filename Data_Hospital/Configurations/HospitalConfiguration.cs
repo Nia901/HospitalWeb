@@ -13,6 +13,22 @@ namespace Data_Hospital.Configurations
     {
         public void Configure(EntityTypeBuilder<Hospital> builder)
         {
+            builder.Property(h => h.Name)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(h => h.Address)
+                .IsRequired();
+
+            builder.Property(h => h.Email)
+                .IsRequired();
+
+            builder.Property(h => h.PhoneNumber)
+                .IsRequired();
+
+            builder.Property(h => h.BedsCount)
+                .IsRequired();
+
             builder.HasData(
                 new Hospital
                 {

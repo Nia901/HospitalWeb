@@ -13,6 +13,29 @@ namespace Data_Hospital.Configurations
     {
         public void Configure(EntityTypeBuilder<Doctor> builder)
         {
+            builder.Property(d => d.FirstName)
+                .IsRequired()
+                .HasMaxLength(30);
+
+            builder.Property(d => d.LastName)
+                .IsRequired()
+                .HasMaxLength(30);
+
+            builder.Property(d => d.Specialty)
+                .IsRequired()
+                .HasMaxLength(50);
+
+            builder.Property(d => d.Email)
+                .IsRequired();
+
+            builder.Property(d => d.PhoneNumber)
+                .IsRequired();
+
+            builder.HasOne(d => d.Hospital)
+                .WithMany(h => h.Doctors)
+                .HasForeignKey(d => d.HospitalId)
+                .OnDelete(DeleteBehavior.Restrict);
+
             builder.HasData(
                 new Doctor
                 {

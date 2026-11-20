@@ -59,11 +59,19 @@ namespace Hospital_Manager.Core.Services
         public async Task DeleteHospitalAsync(int id)
         {
             var hospital = await context.Hospitals.FindAsync(id);
-            if (hospital != null)
+            if(hospital == null)
             {
-                hospital.IsDeleted = true;
-                await context.SaveChangesAsync();
+                return;
+            } 
+            bool hasDoctors=await context.Doctors
+                .AnyAsync(d => d.HospitalId == id);
+            if(hasDoctors)
+            {
+                throw new InvalidOperationException(
+                    "Bolnitsata ne moje da bude iztrita, zashtoto v neq ima doktori");
             }
+            hospital.IsDeleted = true;
+            await context.SaveChangesAsync();
         }
     }
 }
